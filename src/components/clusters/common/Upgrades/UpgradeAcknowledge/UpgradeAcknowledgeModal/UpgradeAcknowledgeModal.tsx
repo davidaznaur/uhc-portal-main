@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ModalVariant } from '@patternfly/react-core/deprecated';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
@@ -14,7 +14,6 @@ import { useGlobalState } from '~/redux/hooks';
 import { UpgradePolicy, VersionGate } from '~/types/clusters_mgmt.v1';
 
 import ErrorBox from '../../../../../common/ErrorBox';
-import Modal from '../../../../../common/Modal/Modal';
 import { setAutomaticUpgradePolicy } from '../../clusterUpgradeActions';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 
@@ -127,34 +126,47 @@ const UpgradeAcknowledgeModal = ({
   if (!isOpen) return null;
   return (
     <Modal
-      title="Administrator acknowledgement"
+      id="acknowledge-upgrade-modal"
       onClose={() => onCancel()}
-      primaryText="Approve and continue"
-      secondaryText="Cancel"
-      onPrimaryClick={() => postClusterAcknowledge()}
-      onSecondaryClick={() => onCancel()}
-      isPrimaryDisabled={!confirmed}
-      isPending={pending}
+      isOpen
+      variant="medium"
+      aria-labelledby="acknowledge-upgrade-modal"
+      aria-describedby="modal-box-acknowledge-upgrade"
       className="ocm-upgrade-ack-modal"
-      modalSize={ModalVariant.medium}
     >
-      {errors.length === 0 ? (
-        <UpgradeAcknowledgeStep
-          fromVersion={fromVersion}
-          toVersion={toVersion}
-          unmetAcknowledgements={unmetAcknowledgements}
-          confirmed={(isConfirmed: boolean) => setConfirmed(isConfirmed)}
-        />
-      ) : (
-        errors.map((error, index) => (
-          <ErrorBox
-            /* eslint-disable-next-line react/no-array-index-key */
-            key={`err-${index}`}
-            message="Failed to save administrator acknowledgement."
-            response={error?.error}
+      <ModalHeader title="Administrator acknowledgement" labelId="acknowledge-upgrade-modal" />
+      <ModalBody>
+        {errors.length === 0 ? (
+          <UpgradeAcknowledgeStep
+            fromVersion={fromVersion}
+            toVersion={toVersion}
+            unmetAcknowledgements={unmetAcknowledgements}
+            confirmed={(isConfirmed) => setConfirmed(isConfirmed)}
           />
-        ))
-      )}
+        ) : (
+          errors.map((error, index) => (
+            <ErrorBox
+              /* eslint-disable-next-line react/no-array-index-key */
+              key={`err-${index}`}
+              message="Failed to save administrator acknowledgement."
+              response={error?.error}
+            />
+          ))
+        )}
+      </ModalBody>
+      <ModalFooter>
+        <Button
+          variant="primary"
+          onClick={() => postClusterAcknowledge()}
+          isDisabled={!confirmed}
+          isLoading={pending}
+        >
+          Approve and continue
+        </Button>
+        <Button variant="link" onClick={() => onCancel()} isDisabled={pending}>
+          Cancel
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };
