@@ -79,7 +79,11 @@ function CustomerOIDCConfiguration({
   input: { onChange },
   meta: { error, touched },
 }) {
-  const { getFieldProps, getFieldMeta } = useFormState();
+  const {
+    getFieldProps,
+    getFieldMeta,
+    values: { [FieldId.RegionalInstance]: regionalInstance },
+  } = useFormState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isRefreshLoading, setIsRefreshLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
@@ -143,7 +147,7 @@ function CustomerOIDCConfiguration({
     [oidcConfigs],
   );
 
-  const rosaRegionLoginCommand = `rosa login --use-auth-code`;
+  const rosaRegionLoginCommand = `rosa login --use-auth-code --url ${regionalInstance?.url}`;
 
   return (
     <Instructions wide>
