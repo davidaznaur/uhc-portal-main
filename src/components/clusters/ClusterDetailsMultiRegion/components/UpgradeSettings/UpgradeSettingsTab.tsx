@@ -375,27 +375,28 @@ const UpgradeSettingsTab = ({ cluster }: UpgradeSettingsTabProps) => {
                   <CardBody>
                     {confirmationModalOpen && scheduledManualUpgrade && (
                       <Modal
+                        id="recurring-updates-confirm-modal"
                         variant="small"
                         isOpen
                         onClose={() => {
                           closeConfirmationModal();
                           formik.resetForm();
                         }}
+                        aria-labelledby="recurring-updates-confirm-modal"
+                        aria-describedby="modal-box-recurring-updates-confirm"
                       >
                         <ModalHeader
                           title="Recurring updates"
-                          labelId="recurring-updates-modal-title"
+                          labelId="recurring-updates-confirm-modal"
                         />
-                        <ModalBody id="recurring-updates-modal-body">
+                        <ModalBody>
                           By choosing recurring updates, any individually scheduled update will be
                           cancelled. Are you sure you want to continue?
                         </ModalBody>
                         <ModalFooter>
-                          {' '}
                           <Button key="confirm" variant="primary" onClick={closeConfirmationModal}>
                             Yes, cancel scheduled update
                           </Button>
-                          ,
                           <Button
                             key="cancel"
                             variant="secondary"
@@ -406,7 +407,6 @@ const UpgradeSettingsTab = ({ cluster }: UpgradeSettingsTabProps) => {
                           >
                             No, keep scheduled update
                           </Button>
-                          ,
                         </ModalFooter>
                       </Modal>
                     )}
