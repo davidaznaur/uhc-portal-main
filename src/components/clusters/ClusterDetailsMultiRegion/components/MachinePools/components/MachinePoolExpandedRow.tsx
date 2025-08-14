@@ -115,7 +115,7 @@ const MachinePoolExpandedRow = ({
 
   return (
     <Grid hasGutter>
-      {!isEmpty(machinePool.labels) && (
+      {(!isEmpty(machinePool.labels) || (awsTagsNewMP && awsTagsAvailable)) && (
         <GridItem md={8}>
           <Stack hasGutter>
             <StackItem>
@@ -123,31 +123,35 @@ const MachinePoolExpandedRow = ({
                 {awsTagsNewMP && awsTagsAvailable ? 'Labels and AWS tags' : 'Labels'}
               </Title>
             </StackItem>
-            <StackItem>
-              <Flex>
-                <FlexItem>
-                  <div className="pf-v6-u-font-size-sm pf-v6-u-disabled-color-100">Labels</div>
-                </FlexItem>
-                <FlexItem>
-                  <LabelGroup
-                    numLabels={1}
-                    collapsedText={`${labels.length - 1} remaining`}
-                    title="Labels"
-                  >
-                    {labels.map((fullLabel) => (
-                      <Label
-                        key={`${fullLabel}`}
-                        color="blue"
-                        className="pf-v6-c-label__text-awstag"
-                      >
-                        {fullLabel}
-                      </Label>
-                    ))}
-                  </LabelGroup>
-                </FlexItem>
-              </Flex>
-            </StackItem>
-            {awsTagsNewMP && awsTagsAvailable ? (
+
+            {!isEmpty(machinePool.labels) && (
+              <StackItem>
+                <Flex>
+                  <FlexItem>
+                    <div className="pf-v6-u-font-size-sm pf-v6-u-disabled-color-100">Labels</div>
+                  </FlexItem>
+                  <FlexItem>
+                    <LabelGroup
+                      numLabels={1}
+                      collapsedText={`${labels.length - 1} remaining`}
+                      title="Labels"
+                    >
+                      {labels.map((fullLabel) => (
+                        <Label
+                          key={`${fullLabel}`}
+                          color="blue"
+                          className="pf-v6-c-label__text-awstag"
+                        >
+                          {fullLabel}
+                        </Label>
+                      ))}
+                    </LabelGroup>
+                  </FlexItem>
+                </Flex>
+              </StackItem>
+            )}
+
+            {awsTagsNewMP && awsTagsAvailable && (
               <StackItem>
                 <Flex>
                   <FlexItem>
@@ -173,7 +177,7 @@ const MachinePoolExpandedRow = ({
                   </FlexItem>
                 </Flex>
               </StackItem>
-            ) : null}
+            )}
           </Stack>
         </GridItem>
       )}

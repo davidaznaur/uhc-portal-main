@@ -105,13 +105,7 @@ describe('MachinePoolExpandedRow', () => {
     });
 
     it('are not displayed if there are none', () => {
-      render(
-        <MachinePoolExpandedRow
-          {...getDefaultProps({
-            labels: {},
-          })}
-        />,
-      );
+      render(<MachinePoolExpandedRow {...getNodePoolProps({ labels: {} })} />);
       expect(screen.queryByText('Labels')).not.toBeInTheDocument();
     });
   });
