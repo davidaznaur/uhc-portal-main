@@ -9,6 +9,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalVariant,
   Stack,
   StackItem,
 } from '@patternfly/react-core';
@@ -182,7 +183,7 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
         <Modal
           id="edit-ext-auth-provider-modal"
           onClose={onClose}
-          variant="medium"
+          variant={ModalVariant.medium}
           isOpen={isOpen}
           aria-labelledby="edit-ext-auth-provider-modal"
           aria-describedby="modal-box-edit-ext-auth-provider"

@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from '@patternfly/react-core';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
@@ -129,7 +136,7 @@ const UpgradeAcknowledgeModal = ({
       id="acknowledge-upgrade-modal"
       onClose={() => onCancel()}
       isOpen
-      variant="medium"
+      variant={ModalVariant.medium}
       aria-labelledby="acknowledge-upgrade-modal"
       aria-describedby="modal-box-acknowledge-upgrade"
       className="ocm-upgrade-ack-modal"

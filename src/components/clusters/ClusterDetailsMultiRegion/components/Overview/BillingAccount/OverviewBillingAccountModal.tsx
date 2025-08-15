@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalVariant,
   StackItem,
 } from '@patternfly/react-core';
 
@@ -76,7 +77,7 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
         <Modal
           id="edit-billing-aws-account-modal"
           onClose={handleClose}
-          variant="small"
+          variant={ModalVariant.small}
           isOpen={isOpen}
           aria-labelledby="edit-billing-aws-account-modal"
           aria-describedby="modal-box-edit-billing-aws-account"

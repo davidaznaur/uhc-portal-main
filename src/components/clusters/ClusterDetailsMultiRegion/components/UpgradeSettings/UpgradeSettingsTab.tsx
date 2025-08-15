@@ -19,6 +19,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalVariant,
 } from '@patternfly/react-core';
 
 import { knownProducts } from '~/common/subscriptionTypes';
@@ -376,7 +377,7 @@ const UpgradeSettingsTab = ({ cluster }: UpgradeSettingsTabProps) => {
                     {confirmationModalOpen && scheduledManualUpgrade && (
                       <Modal
                         id="recurring-updates-confirm-modal"
-                        variant="small"
+                        variant={ModalVariant.small}
                         isOpen
                         onClose={() => {
                           closeConfirmationModal();

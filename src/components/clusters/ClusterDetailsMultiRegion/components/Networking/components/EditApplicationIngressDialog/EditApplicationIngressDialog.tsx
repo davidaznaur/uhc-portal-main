@@ -2,7 +2,15 @@ import React from 'react';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { Button, Form, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
+import {
+  Button,
+  Form,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from '@patternfly/react-core';
 
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa/NetworkScreen/DefaultIngressFieldsFormik';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -106,7 +114,7 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
       {({ dirty, handleSubmit, values }) => (
         <Modal
           id="edit-application-ingress-modal"
-          variant="medium"
+          variant={ModalVariant.medium}
           onClose={onClose}
           isOpen
           aria-labelledby="edit-application-ingress-modal"

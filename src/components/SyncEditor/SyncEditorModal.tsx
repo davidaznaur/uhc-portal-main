@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalVariant,
   Panel,
   PanelMain,
   PanelMainBody,
@@ -120,7 +121,7 @@ const SyncEditorModal = ({
   return (
     <Modal
       isOpen={isOpen}
-      variant="large"
+      variant={ModalVariant.large}
       onClose={handleClose}
       onEscapePress={onEscapePress}
       aria-labelledby="sync-editor-modal"

@@ -9,6 +9,7 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  ModalVariant,
   Stack,
   StackItem,
   Tab,
@@ -205,7 +206,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
       id="action-required-installation-modal"
       isOpen={isOpen}
       onClose={onClose}
-      variant="medium"
+      variant={ModalVariant.medium}
       aria-labelledby="action-required-installation-modal"
       aria-describedby="modal-box-action-required-installation"
     >
