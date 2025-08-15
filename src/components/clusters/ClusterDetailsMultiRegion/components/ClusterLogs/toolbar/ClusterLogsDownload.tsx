@@ -9,6 +9,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  ModalVariant,
   Radio,
   Stack,
   StackItem,
@@ -112,7 +113,7 @@ const ClusterLogsDownload = ({
       {isOpen && (
         <Modal
           id="download-cluster-history-modal"
-          variant="small"
+          variant={ModalVariant.small}
           isOpen
           onClose={isDownloading ? undefined : close}
           aria-labelledby="download-cluster-history-modal"

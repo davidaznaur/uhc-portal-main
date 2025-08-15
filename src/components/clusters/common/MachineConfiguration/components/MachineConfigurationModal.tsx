@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, ModalBody, ModalHeader } from '@patternfly/react-core';
+import { Modal, ModalBody, ModalHeader, ModalVariant } from '@patternfly/react-core';
 
 interface MachineConfigurationModalProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export const MachineConfigurationModal: React.FC<MachineConfigurationModalProps>
   return (
     <Modal
       id="edit-machine-configuration-modal"
-      variant="medium"
+      variant={ModalVariant.medium}
       isOpen
       onClose={onClose}
       aria-labelledby="edit-machine-configuration-modal"

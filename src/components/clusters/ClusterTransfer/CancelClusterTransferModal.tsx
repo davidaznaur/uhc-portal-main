@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Button, Flex, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from '@patternfly/react-core';
 import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
@@ -50,7 +58,7 @@ export const CancelClusterTransferModal = (props: CancelClusterTransferModalProp
         id="cancel-cluster-transfer-modal"
         onClose={handleClose}
         isOpen={isOpen}
-        variant="small"
+        variant={ModalVariant.small}
         aria-labelledby="cancel-cluster-transfer-modal"
         aria-describedby="modal-box-cancel-cluster-transfer"
       >

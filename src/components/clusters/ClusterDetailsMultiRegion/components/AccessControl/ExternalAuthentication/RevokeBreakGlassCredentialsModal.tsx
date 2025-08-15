@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Button, Flex, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from '@patternfly/react-core';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useRevokeBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/AccessControlTab/ExternalAuthenticationQueries/useRevokeBreakGlassCredentials';
@@ -32,7 +40,7 @@ export const RevokeBreakGlassCredentialsModal = (props: RevokeBreakGlassCredenti
       id="revoke-break-glass-modal"
       onClose={handleClose}
       isOpen={isOpen}
-      variant="medium"
+      variant={ModalVariant.medium}
       aria-labelledby="revoke-break-glass-modal"
       aria-describedby="modal-box-revoke-break-glass"
     >

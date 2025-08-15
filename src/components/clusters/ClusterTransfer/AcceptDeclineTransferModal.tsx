@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Button, Flex, Modal, ModalBody, ModalFooter, ModalHeader } from '@patternfly/react-core';
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from '@patternfly/react-core';
 import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
@@ -73,7 +81,7 @@ export const AcceptDeclineClusterTransferModal = (
         id="complete-cluster-transfer-modal"
         onClose={() => handleClose()}
         isOpen={isOpen}
-        variant="small"
+        variant={ModalVariant.small}
         aria-labelledby="complete-cluster-transfer-modal"
         aria-describedby="modal-box-complete-cluster-transfer"
       >
