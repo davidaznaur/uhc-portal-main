@@ -105,6 +105,7 @@ const MachinePoolExpandedRow = ({
   const isAutoRepairEnabled = (machinePool as NodePool)?.auto_repair;
 
   const awsTagsAvailable = hasAwsTags(machinePool);
+  const labelsAvailable = !isEmpty(machinePool.labels);
   const nodePoolTags = (machinePool as NodePool).aws_node_pool?.tags;
   const awsTags = React.useMemo(() => labelsTagsRenderer(nodePoolTags || {}), [nodePoolTags]);
 
@@ -115,16 +116,20 @@ const MachinePoolExpandedRow = ({
 
   return (
     <Grid hasGutter>
-      {(!isEmpty(machinePool.labels) || (awsTagsNewMP && awsTagsAvailable)) && (
+      {(labelsAvailable || (awsTagsNewMP && awsTagsAvailable)) && (
         <GridItem md={8}>
           <Stack hasGutter>
-            <StackItem>
-              <Title headingLevel="h4">
-                {awsTagsNewMP && awsTagsAvailable ? 'Labels and AWS tags' : 'Labels'}
-              </Title>
-            </StackItem>
+            {awsTagsNewMP && awsTagsAvailable ? (
+              <StackItem>
+                <Title headingLevel="h4">Labels and AWS tags</Title>
+              </StackItem>
+            ) : (
+              <StackItem>
+                <Title headingLevel="h4">Labels</Title>
+              </StackItem>
+            )}
 
-            {!isEmpty(machinePool.labels) && (
+            {labelsAvailable && (
               <StackItem>
                 <Flex>
                   <FlexItem>
