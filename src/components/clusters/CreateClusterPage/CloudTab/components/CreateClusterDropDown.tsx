@@ -57,7 +57,7 @@ const CreateClusterDropDown = ({ toggleId, isDisabled }: CreateClusterDropDownPr
   };
 
   return (
-    <Flex>
+    <Flex direction={{ default: 'column' }}>
       <FlexItem>
         <Dropdown
           ref={dropDownRef}
