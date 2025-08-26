@@ -33,7 +33,7 @@ import { InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 
 // TODO: Part of the installation story
 const ClusterStatusMonitor = (props) => {
-  const { cluster, refresh, region } = props;
+  const { cluster, refresh, region, isInstallAlertPresent } = props;
 
   const [refetchInterval, setRefetchInterval] = React.useState(false);
 
@@ -367,7 +367,7 @@ const ClusterStatusMonitor = (props) => {
       const alerts = [];
 
       // Cluster install failure
-      if (clusterStatus.state === clusterStates.error) {
+      if (clusterStatus.state === clusterStates.error && !isInstallAlertPresent) {
         alerts.push(
           <Alert
             variant="danger"
@@ -414,6 +414,7 @@ const ClusterStatusMonitor = (props) => {
 };
 
 ClusterStatusMonitor.propTypes = {
+  isInstallAlertPresent: PropTypes.bool,
   region: PropTypes.string,
   cluster: PropTypes.shape({
     id: PropTypes.string,
