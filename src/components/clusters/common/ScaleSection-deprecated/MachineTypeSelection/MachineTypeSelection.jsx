@@ -22,6 +22,7 @@ import { humanizeValueWithUnit } from '~/common/units';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
@@ -134,6 +135,7 @@ const MachineTypeSelection = ({
     meta: { error, touched },
   } = machineType;
   const { input: forceChoiceInput } = machineTypeForceChoice;
+  const { setFieldValue } = useFormState();
 
   const dispatch = useDispatch();
   // checks if previous selection was from unfiltered machine set. Will flip filter value.
@@ -412,6 +414,7 @@ const MachineTypeSelection = ({
       useRegionFilteredData &&
       input.value &&
       !isMachineTypeIncludedInFilteredSet(input.value, machineTypesByRegion);
+
     return (
       <FormGroup
         label="Compute node instance type"
@@ -423,9 +426,10 @@ const MachineTypeSelection = ({
           treeViewSelectionMap={machineTypeMap}
           inModal={inModal}
           menuAppendTo={menuAppendTo}
-          selected={findSelectedTreeViewItem(input.value)}
+          selected={() => findSelectedTreeViewItem(input.value)}
           selectionPlaceholderText={selectionText}
           setSelected={(event, selection) => {
+            setFieldValue('machine_type_availability', currentSelectionPossiblyUnavailable);
             changeHandler(event, selection.id);
           }}
           menuToggleBadge={currentSelectionPossiblyUnavailable && possiblyUnavailableWarnIcon}
