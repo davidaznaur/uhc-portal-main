@@ -15,7 +15,6 @@ import isAssistedInstallSubscription, {
 import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
 import { useNavigate } from '~/common/routing';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import { RosaArchitectureRenamingAlert } from '~/components/clusters/wizards/rosa/common/Banners/RosaArchitectureRenamingAlert';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
@@ -24,7 +23,6 @@ import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
 import { usePreviousProps } from '~/hooks/usePreviousProps';
-import { useFetchClusterStatus } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchClusterStatus';
 import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import {
   SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
@@ -108,12 +106,6 @@ function ClusterDetailsTop(props) {
     region,
   } = props;
 
-  const {
-    data: clusterStatus,
-    isLoading: isClusterStatusLoading,
-    isError: isClusterStatusError,
-  } = useFetchClusterStatus(cluster.id, region, false);
-
   const hasAlertBeenDismissed = localStorage.getItem(
     HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
   );
@@ -130,25 +122,11 @@ function ClusterDetailsTop(props) {
   // Temporary solution needs update inside the component. (class based into functional) - OCMUI-2357
   const { openModal } = modalActions;
   const isUninstalling = cluster.state === clusterStates.uninstalling;
-  const [isInstallAlertPresent, setIsInstallAlertPresent] = React.useState(false);
-  React.useEffect(() => {
-    if (
-      cluster &&
-      !isClusterStatusLoading &&
-      !isAssistedInstallSubscription(cluster.subscription) &&
-      cluster.state === clusterStates.error &&
-      (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
-    ) {
-      setIsInstallAlertPresent(true);
-    } else {
-      setIsInstallAlertPresent(false);
-    }
-  }, [cluster, isClusterStatusLoading]);
+
   if (isHibernating(cluster)) {
     topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
   } else if (
     cluster &&
-    !isClusterStatusLoading &&
     !isAssistedInstallSubscription(cluster.subscription) &&
     (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
   ) {
@@ -157,16 +135,10 @@ function ClusterDetailsTop(props) {
         <Alert
           variant="danger"
           isInline
-          title="An error occured during cluster install or uninstall process."
+          title="Cluster is in an error state."
           className="pf-v6-u-mt-md"
         >
-          <p>
-            This cluster cannot be recovered, however you can use the logs and network validation to
-            diagnose the problem:
-          </p>
-          {isClusterStatusError && (
-            <ClusterStatusErrorDisplay clusterStatus={clusterStatus} showDescription />
-          )}
+          <p>You can use the logs and network validation to diagnose the problem:</p>
           <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
         </Alert>
       ) : (
@@ -405,12 +377,7 @@ function ClusterDetailsTop(props) {
 
       {/* TODO: Part of installation story */}
       {shouldShowStatusMonitor ? (
-        <ClusterStatusMonitor
-          region={region}
-          refresh={refreshFunc}
-          cluster={cluster}
-          isInstallAlertPresent={isInstallAlertPresent}
-        />
+        <ClusterStatusMonitor region={region} refresh={refreshFunc} cluster={cluster} />
       ) : null}
 
       {showIDPMessage && (

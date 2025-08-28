@@ -33,7 +33,7 @@ import { InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 
 // TODO: Part of the installation story
 const ClusterStatusMonitor = (props) => {
-  const { cluster, refresh, region, isInstallAlertPresent } = props;
+  const { cluster, refresh, region } = props;
 
   const [refetchInterval, setRefetchInterval] = React.useState(false);
 
@@ -367,12 +367,12 @@ const ClusterStatusMonitor = (props) => {
       const alerts = [];
 
       // Cluster install failure
-      if (clusterStatus.state === clusterStates.error && !isInstallAlertPresent) {
+      if (clusterStatus.state === clusterStates.error) {
         alerts.push(
           <Alert
             variant="danger"
             isInline
-            title={`${errorCode} Cluster installation failed`}
+            title={`${errorCode} An error occured during cluster install or uninstall process.`}
             className="pf-v6-u-mt-md"
           >
             <p>
@@ -414,7 +414,6 @@ const ClusterStatusMonitor = (props) => {
 };
 
 ClusterStatusMonitor.propTypes = {
-  isInstallAlertPresent: PropTypes.bool,
   region: PropTypes.string,
   cluster: PropTypes.shape({
     id: PropTypes.string,

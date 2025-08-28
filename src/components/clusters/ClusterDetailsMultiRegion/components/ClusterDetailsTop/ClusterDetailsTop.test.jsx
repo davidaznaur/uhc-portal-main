@@ -144,9 +144,7 @@ describe('<ClusterDetailsTop />', () => {
 
     render(<ClusterDetailsTop {...newProps} />);
 
-    expect(
-      await screen.findByText('An error occured during cluster install or uninstall process.'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Cluster is in an error state.')).toBeInTheDocument();
   });
 
   it('should show only Unarchive button if the cluster is archived', async () => {
