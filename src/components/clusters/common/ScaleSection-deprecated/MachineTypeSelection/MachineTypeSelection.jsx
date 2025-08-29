@@ -395,6 +395,15 @@ const MachineTypeSelection = ({
     [filteredMachineTypes, input.value],
   );
 
+  React.useEffect(() => {
+    const availabilityOfAMachinePool =
+      useRegionFilteredData &&
+      input.value &&
+      !isMachineTypeIncludedInFilteredSet(input.value, machineTypesByRegion);
+    setFieldValue('machine_type_availability', availabilityOfAMachinePool);
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [setFieldValue, useRegionFilteredData, input.value]);
+
   if (
     isDataReady &&
     (!useRegionFilteredData || isRegionSpecificDataReady) &&
@@ -414,7 +423,6 @@ const MachineTypeSelection = ({
       useRegionFilteredData &&
       input.value &&
       !isMachineTypeIncludedInFilteredSet(input.value, machineTypesByRegion);
-
     return (
       <FormGroup
         label="Compute node instance type"
@@ -429,7 +437,6 @@ const MachineTypeSelection = ({
           selected={() => findSelectedTreeViewItem(input.value)}
           selectionPlaceholderText={selectionText}
           setSelected={(event, selection) => {
-            setFieldValue('machine_type_availability', currentSelectionPossiblyUnavailable);
             changeHandler(event, selection.id);
           }}
           menuToggleBadge={currentSelectionPossiblyUnavailable && possiblyUnavailableWarnIcon}

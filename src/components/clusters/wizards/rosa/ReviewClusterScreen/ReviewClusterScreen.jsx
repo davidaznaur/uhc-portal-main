@@ -323,7 +323,7 @@ const ReviewClusterScreen = ({
         >
           <Flex spaceItems={{ default: 'spaceItemsNone' }}>
             <FlexItem>{ReviewItem(FieldId.MachineType)}</FlexItem>
-            {!machineTypeAvailability && (
+            {machineTypeAvailability && (
               <FlexItem>
                 <Tooltip
                   aria-label="Possibly unavailable machine type"
