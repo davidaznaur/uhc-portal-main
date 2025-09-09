@@ -160,9 +160,9 @@ const useMachinePoolFormik = ({
         (machinePool as MachinePool)?.aws?.additional_security_group_ids ||
         (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
         [],
-      maxSurge: maxSurge ? parseInt(maxSurge) : 1,
-      maxUnavailable: maxUnavailable ? parseInt(maxUnavailable) : 0,
-      nodeDrainTimeout: nodeDrainTimeout ? nodeDrainTimeout : 0,
+      maxSurge: maxSurge ? parseInt(maxSurge, 10) : 1,
+      maxUnavailable: maxUnavailable ? parseInt(maxUnavailable, 10) : 0,
+      nodeDrainTimeout: nodeDrainTimeout || 0,
     };
 
     if (isGCP) {

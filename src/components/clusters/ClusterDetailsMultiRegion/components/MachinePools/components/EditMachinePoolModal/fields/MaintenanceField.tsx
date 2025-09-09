@@ -1,10 +1,11 @@
-import { FormGroup, NumberInput } from '@patternfly/react-core';
-import { useField } from 'formik';
 import React from 'react';
+import { useField } from 'formik';
+
+import { FormGroup, NumberInput } from '@patternfly/react-core';
+
 import { MAINTENANCE_MIN_VALUE } from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
-import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 type MaintenanceFieldProps = {
   fieldId: string;
@@ -13,8 +14,8 @@ type MaintenanceFieldProps = {
 };
 
 export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldProps) => {
-  const onChange = useFormikOnChange(fieldId);
-  const [field, { touched, error }] = useField(fieldId);
+  const [field, { touched, error }, helpers] = useField(fieldId);
+  const { setValue, setTouched } = helpers;
   return (
     <FormGroup
       fieldId={fieldId}
@@ -31,16 +32,18 @@ export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldP
         id={fieldId}
         onPlus={() => {
           const newValue = field.value ? field.value + 1 : 0 + 1;
-          onChange(newValue);
+          setTouched(true);
+          setValue(newValue);
         }}
         onMinus={() => {
           const newValue = field.value ? field.value - 1 : 0;
-          onChange(newValue);
+          setTouched(true);
+          setValue(newValue);
         }}
         onChange={(e) => {
-          const newMaintenanceMaxNum = parseInt((e.target as any).value);
+          const newMaintenanceMaxNum = parseInt((e.target as any).value, 10);
           const newValue = Number(newMaintenanceMaxNum);
-          onChange(newValue);
+          setValue(newValue);
         }}
         unit={
           <span className="ocm-spot-instances__unit">

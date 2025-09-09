@@ -4,16 +4,16 @@ import { FormikErrors } from 'formik';
 import { Form, Tab, TabContent } from '@patternfly/react-core';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { MP_ADDITIONAL_MAINTENANCE_VALUES } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { ClusterFromSubscription } from '~/types/types';
 
+import { MAX_SURGE_HINT, MAX_UNAVAILABLE_HINT, NODE_DRAIN_TIMEOUT_HINT } from '../constants';
 import AutoRepairField from '../fields/AutoRepairField';
+import { MaintenanceField } from '../fields/MaintenanceField';
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 import { hasErrors, tabTitle } from './subTabHelpers';
-import { MaintenanceField } from '../fields/MaintenanceField';
-import { MAX_SURGE_HINT, MAX_UNAVAILABLE_HINT, NODE_DRAIN_TIMEOUT_HINT } from '../constants';
-import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
-import { MP_ADDITIONAL_MAINTENANCE_VALUES } from '~/queries/featureGates/featureConstants';
 
 const fieldsInTab = ['auto_repair', 'maxSurge', 'maxUnavailable', 'nodeDrainTimeout'];
 
@@ -36,7 +36,6 @@ export const useMaintenanceSubTab = ({
 
   const tab = (errors: FormikErrors<EditMachinePoolValues>) => {
     const tabErrors = hasErrors(errors, fieldsInTab);
-    console.log('tabErrors', tabErrors);
     return isHypershift ? (
       <Tab
         eventKey={tabKey}
