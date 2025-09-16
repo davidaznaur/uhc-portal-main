@@ -111,8 +111,10 @@ export const UpdatePoolButton = ({
               {scheduledMessage} at{' '}
               <Timestamp
                 date={currentDate}
-                dateFormat={TimestampFormat.full}
-                timeFormat={TimestampFormat.full}
+                shouldDisplayUTC
+                dateFormat={TimestampFormat.medium}
+                timeFormat={TimestampFormat.medium}
+                locale="en-GB"
               />
               {schedule.version}
             </>
