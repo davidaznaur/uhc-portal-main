@@ -115,8 +115,8 @@ export const UpdatePoolButton = ({
                 dateFormat={TimestampFormat.medium}
                 timeFormat={TimestampFormat.medium}
                 locale="en-GB"
-              />
-              {schedule.version}
+              />{' '}
+              to version {schedule.version}
             </>
           }
         />
