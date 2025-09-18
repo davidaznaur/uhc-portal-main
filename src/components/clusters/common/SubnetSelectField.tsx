@@ -83,12 +83,7 @@ export const SubnetSelectField = ({
         subnetList.push(subnet);
       }
 
-      if (isRestrictedEnv()) {
-        if (subnetsByAZ[subnetAZ]) {
-          subnetsByAZ[subnetAZ].push(entry);
-        } else {
-          subnetsByAZ[subnetAZ] = [entry];
-        }
+      if (isRestrictedEnv() && !subnet.public) {
         subnetList.push(subnet);
       }
     });
