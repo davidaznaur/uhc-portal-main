@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 
-import { FormGroup, NumberInput } from '@patternfly/react-core';
+import { FormGroup, NumberInput, NumberInputProps } from '@patternfly/react-core';
 
 import { MAINTENANCE_MIN_VALUE } from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
@@ -16,6 +16,13 @@ type MaintenanceFieldProps = {
 export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldProps) => {
   const [field, { touched, error }, helpers] = useField(fieldId);
   const { setValue, setTouched } = helpers;
+  const minMaxProps: NumberInputProps = {
+    min: MAINTENANCE_MIN_VALUE,
+  };
+
+  if (fieldId === 'nodeDrainTimeout') {
+    minMaxProps.max = 10080;
+  }
   return (
     <FormGroup
       fieldId={fieldId}
@@ -51,7 +58,7 @@ export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldP
           </span>
         }
         widthChars={8}
-        min={MAINTENANCE_MIN_VALUE}
+        {...minMaxProps}
       />
       <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>

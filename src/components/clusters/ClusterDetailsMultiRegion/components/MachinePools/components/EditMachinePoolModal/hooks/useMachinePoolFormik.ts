@@ -326,9 +326,16 @@ const useMachinePoolFormik = ({
             ? Yup.string().required('Compute node instance type is a required field.')
             : Yup.string(),
           replicas: Yup.number(),
-          maxSurge: Yup.number().nullable().min(1, 'Input cannot be less than 1'),
-          maxUnavailable: Yup.number(),
-          nodeDrainTimeout: Yup.number().max(10080, 'Input cannot be greater than 10080'),
+          maxSurge: Yup.number()
+            .typeError('maxSurge must be a number. Please provide a valid numeric value.')
+            .nullable()
+            .min(1, 'Input cannot be less than 1'),
+          maxUnavailable: Yup.number().typeError(
+            'maxUnavailable must be a number. Please provide a valid numeric value.',
+          ),
+          nodeDrainTimeout: Yup.number()
+            .typeError('nodeDrainTimeout must be a number. Please provide a valid numeric value.')
+            .max(10080, 'Input cannot be greater than 10080'),
           useSpotInstances: Yup.boolean(),
           privateSubnetId:
             !hasMachinePool && isHypershift
