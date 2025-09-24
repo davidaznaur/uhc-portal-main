@@ -329,7 +329,7 @@ const useMachinePoolFormik = ({
           maxSurge: Yup.number()
             .typeError('maxSurge must be a number. Please provide a valid numeric value.')
             .nullable()
-            .min(0, 'Input cannot be less than 1')
+            .min(0, 'Input cannot be less than 0')
             .test(
               'not-both-zero-surge',
               'Cannot be 0 if Max Unavailable is also 0.',
