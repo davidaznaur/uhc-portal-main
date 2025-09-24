@@ -329,10 +329,25 @@ const useMachinePoolFormik = ({
           maxSurge: Yup.number()
             .typeError('maxSurge must be a number. Please provide a valid numeric value.')
             .nullable()
-            .min(1, 'Input cannot be less than 1'),
-          maxUnavailable: Yup.number().typeError(
-            'maxUnavailable must be a number. Please provide a valid numeric value.',
-          ),
+            .min(0, 'Input cannot be less than 1')
+            .test(
+              'not-both-zero-surge',
+              'Cannot be 0 if Max Unavailable is also 0.',
+              function testZeroValues(value) {
+                const { maxUnavailable } = this.parent;
+                return !(value === 0 && maxUnavailable === 0);
+              },
+            ),
+          maxUnavailable: Yup.number()
+            .typeError('maxUnavailable must be a number. Please provide a valid numeric value.')
+            .test(
+              'not-both-zero-unavailable',
+              'Cannot be 0 if Max Surge is also 0.',
+              function testZeroValues(value) {
+                const { maxSurge } = this.parent;
+                return !(value === 0 && maxSurge === 0);
+              },
+            ),
           nodeDrainTimeout: Yup.number()
             .typeError('nodeDrainTimeout must be a number. Please provide a valid numeric value.')
             .max(10080, 'Input cannot be greater than 10080'),
