@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormikErrors } from 'formik';
 
-import { Form, Tab, TabContent } from '@patternfly/react-core';
+import { Form, FormGroup, Stack, StackItem, Tab, TabContent } from '@patternfly/react-core';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { MP_ADDITIONAL_MAINTENANCE_VALUES } from '~/queries/featureGates/featureConstants';
@@ -57,19 +57,38 @@ export const useMaintenanceSubTab = ({
         <Form>
           <AutoRepairField cluster={cluster} />
           {isHypershift && isAdditionalMaintenanceValuesEnabled && (
-            <>
-              <MaintenanceField fieldId="maxSurge" fieldName="Max surge" hint={MAX_SURGE_HINT} />
-              <MaintenanceField
-                fieldId="maxUnavailable"
-                fieldName="Max unavailable"
-                hint={MAX_UNAVAILABLE_HINT}
-              />
-              <MaintenanceField
-                fieldId="nodeDrainTimeout"
-                fieldName="Node drain timeout"
-                hint={NODE_DRAIN_TIMEOUT_HINT}
-              />
-            </>
+            <FormGroup label="Upgrade management">
+              <Stack hasGutter>
+                <StackItem>
+                  <div className="uhc-labels-section__description">
+                    Fine-tune your deployment: Max Surge speeds up updates by adding extra new pods,
+                    while Max Unavailable ensures a minimum number of your current pods remain
+                    active
+                  </div>
+                </StackItem>
+                <StackItem>
+                  <MaintenanceField
+                    fieldId="maxSurge"
+                    fieldName="Max surge"
+                    hint={MAX_SURGE_HINT}
+                  />
+                </StackItem>
+                <StackItem>
+                  <MaintenanceField
+                    fieldId="maxUnavailable"
+                    fieldName="Max unavailable"
+                    hint={MAX_UNAVAILABLE_HINT}
+                  />
+                </StackItem>
+                <StackItem>
+                  <MaintenanceField
+                    fieldId="nodeDrainTimeout"
+                    fieldName="Node drain timeout"
+                    hint={NODE_DRAIN_TIMEOUT_HINT}
+                  />
+                </StackItem>
+              </Stack>
+            </FormGroup>
           )}
         </Form>
       </TabContent>
