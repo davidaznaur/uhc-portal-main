@@ -327,7 +327,7 @@ const useMachinePoolFormik = ({
             : Yup.string(),
           replicas: Yup.number(),
           maxSurge: Yup.number()
-            .typeError('maxSurge must be a number. Please provide a valid numeric value.')
+            .typeError('Max surge must be a number. Please provide a valid numeric value.')
             .nullable()
             .min(0, 'Input cannot be less than 0')
             .test(
@@ -339,7 +339,9 @@ const useMachinePoolFormik = ({
               },
             ),
           maxUnavailable: Yup.number()
-            .typeError('maxUnavailable must be a number. Please provide a valid numeric value.')
+            .typeError('Max unavailable must be a number. Please provide a valid numeric value.')
+            .nullable()
+            .min(0, 'Input cannot be less than 0')
             .test(
               'not-both-zero-unavailable',
               'Cannot be 0 if Max Surge is also 0.',
@@ -349,7 +351,9 @@ const useMachinePoolFormik = ({
               },
             ),
           nodeDrainTimeout: Yup.number()
-            .typeError('nodeDrainTimeout must be a number. Please provide a valid numeric value.')
+            .typeError('Node drain timeout must be a number. Please provide a valid numeric value.')
+            .nullable()
+            .min(0, 'Input cannot be less than 0')
             .max(10080, 'Input cannot be greater than 10080'),
           useSpotInstances: Yup.boolean(),
           privateSubnetId:
