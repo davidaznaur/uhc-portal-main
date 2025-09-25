@@ -37,6 +37,7 @@ export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldP
       <NumberInput
         {...field}
         id={fieldId}
+        name={fieldId}
         onPlus={() => {
           const newValue = field.value ? field.value + 1 : 0 + 1;
           setTouched(true);
@@ -58,6 +59,10 @@ export const MaintenanceField = ({ fieldId, fieldName, hint }: MaintenanceFieldP
           </span>
         }
         widthChars={8}
+        onBlur={(e) => {
+          setTouched(true);
+          field.onBlur(e);
+        }}
         {...minMaxProps}
       />
       <FormGroupHelperText touched={touched} error={error} />
