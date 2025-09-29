@@ -310,7 +310,7 @@ const UpgradeWizard = () => {
                             date={new Date(upgradeTimestamp!)}
                             locale="eng-GB"
                             dateFormat={TimestampFormat.long}
-                            timeFormat={TimestampFormat.short}
+                            timeFormat={TimestampFormat.full}
                           />
                         </dd>
                       </div>
