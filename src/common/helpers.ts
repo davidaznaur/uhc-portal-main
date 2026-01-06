@@ -329,7 +329,7 @@ const constructSelectedSubnets = (formValues?: Record<string, any>) => {
   };
   const isHypershift = formValues?.hypershift === 'true';
   const usePrivateLink = formValues?.use_privatelink;
-
+  console.log('FORMVALUES', formValues);
   let privateSubnets: Subnet[] = [];
   let publicSubnets: Subnet[] = [];
   let selectedSubnets: Subnet[] = [];

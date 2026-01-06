@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
 import isEmpty from 'lodash/isEmpty';
 import { useDispatch } from 'react-redux';
@@ -50,6 +50,8 @@ import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsField
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSectionMultiRegion';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
+import { useAccountQuotaAndOrganization } from '~/queries/useQuotaAndOrganizationQueries';
+import { useFetchAWSAccountIDs } from '~/queries/RosaWizardQueires/useFetchAWSAccountIDs';
 
 interface UpgradeSettingsFormValues {
   upgrade_policy: 'automatic' | 'manual';
@@ -64,7 +66,14 @@ interface UpgradeSettingsTabProps {
 
 const UpgradeSettingsTab = ({ cluster }: UpgradeSettingsTabProps) => {
   const dispatch = useDispatch();
+  const { data, isLoading, isError, error } = useAccountQuotaAndOrganization();
 
+  const orgID = data?.organization.id;
+  const { data: accountsData } = useFetchAWSAccountIDs(orgID!);
+
+  console.log('ORG ACCOUNTS DATA', accountsData);
+
+  console.log('ORG DATA', data);
   const region = cluster?.subscription?.rh_region_id;
   const clusterID = cluster.id || '';
   const { canEdit } = cluster;

@@ -337,6 +337,7 @@ const MachineTypeSelection = ({
       useRegionFilteredData &&
       instanceType &&
       !isMachineTypeIncludedInFilteredSet(instanceType?.id, machineTypesByRegion);
+    console.log('values values map', machineTypeMap);
     return (
       <FormGroup
         label="Compute node instance type"

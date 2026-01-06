@@ -946,6 +946,7 @@ const subnetCidrs = (
     return ip.start().toString();
   };
 
+  console.log('SELECTED SUBNETS', selectedSubnets);
   const compareCidrs = (shouldInclude: boolean) => {
     if (shouldInclude) {
       selectedSubnets?.forEach((subnet: Subnet) => {

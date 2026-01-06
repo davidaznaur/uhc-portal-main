@@ -265,7 +265,6 @@ const CreateROSAWizardInternal = ({
               </>
             }
             nav={{ 'aria-label': `${ariaTitle} steps` }}
-            isVisitRequired
           >
             {isHypershiftEnabled ? (
               <WizardStep id={stepId.CONTROL_PLANE} name={stepNameById[stepId.CONTROL_PLANE]}>
@@ -405,6 +404,7 @@ function CreateROSAWizard(props) {
     isValid,
     resetForm,
   } = useFormState();
+  console.log('values values', values);
   const isHypershiftSelected = hypershiftValue === 'true';
   const combinedProps = {
     ...props,

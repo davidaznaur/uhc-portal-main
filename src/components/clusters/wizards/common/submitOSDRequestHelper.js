@@ -23,7 +23,7 @@ const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
   const subnetIds = [];
 
   const { machinePoolsSubnets: mpSubnets } = formData;
-
+  console.log('DAVID mpSubnets', mpSubnets);
   if (formData.hypershift === 'true') {
     if (formData.cluster_privacy === 'external') {
       subnetIds.push(formData.cluster_privacy_public_subnet_id);

@@ -2425,6 +2425,11 @@
   resolved "https://registry.yarnpkg.com/@patternfly/patternfly/-/patternfly-6.2.1.tgz#cc7094ed047a9378f52d29b0f42cdbf462e8a210"
   integrity sha512-aKl1dy8pI1SIJHFlhbQOQl9ScMvQDi7wxN73nWq73OgdFfvVpYg7obWQh3yqX8NzvbAsC6oBnNMw5eWVC9ngVg==
 
+"@patternfly/patternfly@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/patternfly/-/patternfly-6.4.0.tgz#8ccc792573a525440f828ca1fb11eade864afb4d"
+  integrity sha512-4drFhg74sEc/fftark5wZevODIog17qR4pwLCdB3j5iK3Uu5oMA2SdLhsEeEQggalfnFzve/Km87MdVR0ghhvQ==
+
 "@patternfly/react-charts@8.2.1":
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/@patternfly/react-charts/-/react-charts-8.2.1.tgz#83b0a6fec959b220f486b28b382ade1cf05abd08"
@@ -2480,6 +2485,17 @@
     "@patternfly/react-icons" "^6.0.0"
     "@patternfly/react-table" "^6.0.0"
     clsx "^2.1.1"
+    react-jss "^10.10.0"
+
+"@patternfly/react-component-groups@^6.3.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-component-groups/-/react-component-groups-6.4.0.tgz#f657eefb059cd41ff91af2e273e14bf8c48f77a2"
+  integrity sha512-vg0761nQ/7hfggbp6+XowRcQQSd9oIToh77+4lmsyrs41MkA5ppQIPBCZ4lUZW87kmEPhkHqglpJcVfsrrIM/g==
+  dependencies:
+    "@patternfly/react-core" "^6.0.0"
+    "@patternfly/react-icons" "^6.0.0"
+    "@patternfly/react-styles" "^6.0.0"
+    "@patternfly/react-table" "^6.0.0"
     react-jss "^10.10.0"
 
 "@patternfly/react-core@4.168.8":
@@ -2564,6 +2580,11 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-6.1.0.tgz#4f982f2b8dc0b9366acca1170fcd52fa8c16b85f"
   integrity sha512-V1w/j19YmOgvh72IRRf1p07k+u4M5+9P+o/IxunlF0fWzLDX4Hf+utBI11A8cRfUzpQN7eLw/vZIS3BLM8Ge3Q==
 
+"@patternfly/react-icons@^6.3.1":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-6.4.0.tgz#563d5a51e76084dea8c752b587fc479dfe10fc31"
+  integrity sha512-SPjzatm73NUYv/BL6A/cjRA5sFQ15NkiyPAcT8gmklI7HY+ptd6/eg49uBDFmxTQcSwbb5ISW/R6wwCQBY2M+Q==
+
 "@patternfly/react-styles@5.2.0", "@patternfly/react-styles@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-5.2.0.tgz#5e2ffd1270f252844acddb1b45b4e70fefbc72c6"
@@ -2578,6 +2599,11 @@
   version "4.92.8"
   resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-4.92.8.tgz#2f05455dfe8095a16df27c0d185a7f46f9451d74"
   integrity sha512-K4lUU8O4HiCX9NeuNUIrPgN3wlGERCxJVio+PAjd8hpJD/PKnjFfOJ9u6/Cii3qLy/5ZviWPRNHbGiwA/+YUhg==
+
+"@patternfly/react-styles@^6.0.0", "@patternfly/react-styles@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-6.4.0.tgz#2e29d59a4e3df737e742de58dc1525a27287415d"
+  integrity sha512-EXmHA67s5sy+Wy/0uxWoUQ52jr9lsH2wV3QcgtvVc5zxpyBX89gShpqv4jfVqaowznHGDoL6fVBBrSe9BYOliQ==
 
 "@patternfly/react-styles@^6.1.0":
   version "6.1.0"
@@ -12582,6 +12608,17 @@ nwsapi@^2.2.2:
   version "2.2.10"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.10.tgz#0b77a68e21a0b483db70b11fad055906e867cda8"
   integrity sha512-QK0sRs7MKv0tKe1+5uZIQk/C8XGza4DAnztJG8iD+TpJIORARrCxczA738awHrZoHeTjSSoHqao2teO0dC/gFQ==
+
+"nxtcm-components@file:../../CONSOLENEXT/nxtcm-components":
+  version "0.0.1"
+  dependencies:
+    "@patternfly/patternfly" "^6.4.0"
+    "@patternfly/react-component-groups" "^6.3.0"
+    "@patternfly/react-icons" "^6.3.1"
+    "@patternfly/react-styles" "^6.4.0"
+    js-yaml "^4.1.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
 
 nyc@15.1.0:
   version "15.1.0"

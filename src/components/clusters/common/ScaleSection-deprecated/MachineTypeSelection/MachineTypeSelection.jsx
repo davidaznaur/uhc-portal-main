@@ -423,6 +423,7 @@ const MachineTypeSelection = ({
       useRegionFilteredData &&
       input.value &&
       !isMachineTypeIncludedInFilteredSet(input.value, machineTypesByRegion);
+    console.log('values values map', machineTypeMap);
     return (
       <FormGroup
         label="Compute node instance type"

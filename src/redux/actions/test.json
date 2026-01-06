@@ -1,0 +1,116 @@
+{
+    "kind": "VPCList",
+    "page": 1,
+    "size": 2,
+    "total": 2,
+    "items": [
+        {
+            "name": "kim-1-vpc",
+            "red_hat_managed": false,
+            "id": "vpc-0b978834b9ee373b3",
+            "cidr_block": "10.0.0.0/16",
+            "aws_subnets": [
+                {
+                    "subnet_id": "subnet-051d840eb91a52077",
+                    "name": "kim-1-subnet-public1-us-east-1a",
+                    "red_hat_managed": false,
+                    "public": true,
+                    "availability_zone": "us-east-1a",
+                    "cidr_block": "10.0.0.0/20"
+                },
+                {
+                    "subnet_id": "subnet-067516735e89b4254",
+                    "name": "kim-1-subnet-public3-us-east-1c",
+                    "red_hat_managed": false,
+                    "public": true,
+                    "availability_zone": "us-east-1c",
+                    "cidr_block": "10.0.32.0/20"
+                },
+                {
+                    "subnet_id": "subnet-07554d0bccbb96c5d",
+                    "name": "kim-1-subnet-public2-us-east-1b",
+                    "red_hat_managed": false,
+                    "public": true,
+                    "availability_zone": "us-east-1b",
+                    "cidr_block": "10.0.16.0/20"
+                },
+                {
+                    "subnet_id": "subnet-05d2817f06c106388",
+                    "name": "kim-1-subnet-private3-us-east-1c",
+                    "red_hat_managed": false,
+                    "public": false,
+                    "availability_zone": "us-east-1c",
+                    "cidr_block": "10.0.160.0/20"
+                },
+                {
+                    "subnet_id": "subnet-027846a98cca3677e",
+                    "name": "kim-1-subnet-private1-us-east-1a",
+                    "red_hat_managed": false,
+                    "public": false,
+                    "availability_zone": "us-east-1a",
+                    "cidr_block": "10.0.128.0/20"
+                },
+                {
+                    "subnet_id": "subnet-02e8862d22cb5cfde",
+                    "name": "kim-1-subnet-private2-us-east-1b",
+                    "red_hat_managed": false,
+                    "public": false,
+                    "availability_zone": "us-east-1b",
+                    "cidr_block": "10.0.144.0/20"
+                }
+            ]
+        },
+        {
+            "name": "test-vpc",
+            "red_hat_managed": false,
+            "id": "vpc-057c8018f81dd8c1e",
+            "cidr_block": "10.0.0.0/16",
+            "aws_subnets": [
+                {
+                    "subnet_id": "subnet-0e2b3ec94be74763b",
+                    "name": "test-subnet-private1-us-east-1a",
+                    "red_hat_managed": false,
+                    "public": false,
+                    "availability_zone": "us-east-1a",
+                    "cidr_block": "10.0.128.0/20"
+                }
+            ],
+            "aws_security_groups": [
+                {
+                    "id": "sg-0ae475e30eedb7288",
+                    "name": "2mfujrd15dt1eg71kpe0ioshgnn6k2aq-default-sg",
+                    "red_hat_managed": true
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
+{
+    "aws": {
+        "account_id": "720424066366",
+        "sts": {
+            "role_arn": "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Installer-Role"
+        }
+    },
+    "region": {
+        "id": "us-east-1"
+    }
+}
+
+{
+    "aws": {
+        "sts": {
+            "role_arn": "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Installer-Role"
+        }
+    },
+    "region": {
+        "id": "us-east-1"
+    },
+    "availability_zones": [
+        "us-east-1a"
+    ]
+}

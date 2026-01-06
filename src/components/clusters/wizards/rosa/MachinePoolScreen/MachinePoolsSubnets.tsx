@@ -29,6 +29,10 @@ const MachinePoolsSubnets = () => {
     getFieldMeta,
   } = useFormState();
 
+  console.log('SELECTEDVPC', selectedVPC);
+
+  console.log('machinePoolsSubnets', machinePoolsSubnets);
+
   const subnetWarnings = useMemo(() => {
     if (machinePoolsSubnets) {
       const privateSubnetIds = (machinePoolsSubnets as FormSubnet[])

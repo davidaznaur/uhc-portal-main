@@ -8,6 +8,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+
     "@openshift-assisted/locales": "2.38.4",
     "@openshift-assisted/types": "2.38.4",
     "@openshift-assisted/ui-lib": "2.38.4",

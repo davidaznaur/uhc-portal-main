@@ -38,6 +38,8 @@ const MachinePoolSubnetsForm = ({
     setTouched,
   } = useFormState();
 
+  console.log('ALLSUBNETS', allMachinePoolSubnets);
+
   const machinePoolsSubnetsFromProps = allMachinePoolSubnets;
 
   useEffect(
@@ -65,16 +67,29 @@ const MachinePoolSubnetsForm = ({
       (subnet) => subnet.availability_zone,
     )?.availability_zone;
 
+    const avail1 = 'daz-hcp-subnet-public1-us-east-1a';
+    const avail2 = 'daz-subnet-public1-us-gov-west-1a';
+
+    const regionPrefix1 = avail1?.split('-').slice(0, 3).join('-');
+
+    const regionPrefix2 = avail2?.split('-').slice(0, 3).join('-');
+    console.log('DATKA regionPrefix 1', regionPrefix1);
+    console.log('DATKA regionPrefix 2', regionPrefix2);
+
     const regionPrefix = availabilityZone?.split('-').slice(0, 3).join('-');
     const region =
       regionPrefix && azLetters.includes(regionPrefix.slice(-1))
         ? regionPrefix.slice(0, -1)
         : regionPrefix;
-
+    console.log('DAVID REGION', region);
     return region;
   };
 
   const region = selectedVPC ? inferRegionFromSubnets(selectedVPC) : undefined;
+  console.log(
+    "DAVID getMatchingAvailabilityZones(region, selectedVPC, ['private'])",
+    getMatchingAvailabilityZones(region, selectedVPC, ['private']),
+  );
   const allowedAZs =
     region && selectedVPC ? getMatchingAvailabilityZones(region, selectedVPC, ['private']) : [];
 

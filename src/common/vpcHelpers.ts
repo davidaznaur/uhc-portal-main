@@ -21,21 +21,26 @@ const isSubnetMatchingPrivacy = (subnet: Subnetwork, privacy?: SubnetPrivacy) =>
  * @returns SubnetPrivacy[] List of availability zones which have the required subnets
  */
 const getMatchingAvailabilityZones = (
-  region: string,
-  vpc: CloudVpc,
-  privacyList: SubnetPrivacy[],
-) =>
-  ['a', 'b', 'c', 'd', 'e', 'f']
+  region?: string,
+  vpc?: CloudVpc,
+  privacyList?: SubnetPrivacy[],
+) => {
+  return ['a', 'b', 'c', 'd', 'e', 'f']
     .map((letter) => `${region}${letter}`)
-    .filter((zoneId) =>
-      // For every zone and privacy type, there must be at least one subnet that matches both criteria
-      privacyList.every((privacy) =>
-        vpc.aws_subnets?.some(
-          (subnet) =>
-            subnet.availability_zone === zoneId && isSubnetMatchingPrivacy(subnet, privacy),
-        ),
-      ),
-    );
+    .filter((zoneId) => {
+      console.log('davad zoneId', zoneId);
+      return (
+        // For every zone and privacy type, there must be at least one subnet that matches both criteria
+        privacyList?.every((privacy) => {
+          console.log('davad', privacy);
+          return vpc?.aws_subnets?.some((subnet) => {
+            console.log('davad subnet', subnet);
+            return subnet.availability_zone === zoneId && isSubnetMatchingPrivacy(subnet, privacy);
+          });
+        })
+      );
+    });
+};
 
 /**
  * Obtains the information of the availability zone of a subnet from the VPC details

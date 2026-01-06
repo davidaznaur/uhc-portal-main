@@ -20,17 +20,25 @@ const filterSubnetsByPrivacyAndAZ = (
   const allFilteredSubnets: Subnetwork[] = [];
   selectedVPC.aws_subnets?.forEach((subnet) => {
     const subnetAZ = subnet.availability_zone || '';
+    console.log('DAVID allowedAZs', allowedAZs);
     if (
       isSubnetMatchingPrivacy(subnet, privacy) &&
       (allowedAZs === undefined || allowedAZs.includes(subnetAZ))
     ) {
+      console.log(
+        'DAVID isSubnetMatchingPrivacy(subnet, privacy)',
+        isSubnetMatchingPrivacy(subnet, privacy),
+      );
       allFilteredSubnets.push(subnet);
     }
 
+    console.log('DAVID allowedAZs', allowedAZs);
     if (isRestrictedEnv()) {
       allFilteredSubnets.push(subnet);
     }
   });
+  console.log('DAVID allFilteredSubnets', allFilteredSubnets);
+
   return allFilteredSubnets;
 };
 
@@ -69,6 +77,7 @@ const subnetsByAvailabilityZone = (subnets: Subnetwork[]): FuzzyDataType => {
 
   const result: FuzzyDataType = {};
 
+  console.log('DAVID subnetsByAZ', subnetsByAZ);
   Object.entries(subnetsByAZ)
     .sort(([azA], [azB]) => azA.localeCompare(azB))
     .forEach(([az, azSubnets]) => {
@@ -79,6 +88,7 @@ const subnetsByAvailabilityZone = (subnets: Subnetwork[]): FuzzyDataType => {
       }));
     });
 
+  console.log('DAVID RESULT', result);
   return result;
 };
 

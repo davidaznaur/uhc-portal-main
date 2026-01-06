@@ -31,7 +31,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
   const isHypershiftSelected = formData.hypershift === 'true';
-
+  console.log('DAVID HYPERSHIFTSELECTED', isHypershiftSelected);
+  console.log('DAVID isMultiAz', isMultiAz);
+  console.log('DAVID actualCloudProviderID', actualCloudProviderID);
+  console.log('DAVID actualProduct', actualProduct);
   const isRedHatOIDCManaged = formData?.byo_oidc_config_id_managed === 'true';
 
   const clusterRequest = {
@@ -148,6 +151,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     };
     if (actualCloudProviderID === 'aws') {
       if (actualProduct === 'ROSA') {
+        console.log('DAVID FORMDATA IN CLUSTER REQUEST STS', formData);
         // STS credentials
         clusterRequest.aws = {
           account_id: formData.associated_aws_id,

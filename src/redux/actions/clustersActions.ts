@@ -65,7 +65,7 @@ const createClusterAndUpgradeSchedule = async (
   regionalId?: string,
 ) => {
   const regionalClusterService = regionalId ? getClusterServiceForRegion(regionalId) : undefined;
-
+  console.log('I AM CLUSTER IN OLD DISPATCH', cluster);
   const clusterResponse = regionalClusterService
     ? await regionalClusterService.postNewCluster(cluster)
     : await clusterService.postNewCluster(cluster);
@@ -386,6 +386,7 @@ const getInstallableVersions = (params: {
   includeUnstableVersions?: boolean;
 }) => {
   const versions = clusterService.getInstallableVersions(params);
+  console.log('VERSIONS', versions);
   return action(clustersConstants.GET_CLUSTER_VERSIONS, versions, params);
 };
 

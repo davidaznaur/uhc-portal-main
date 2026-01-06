@@ -61,10 +61,12 @@ function ScaleSection() {
   } = useFormState();
 
   const isImdsEnabledHypershift = useFeatureGate(IMDS_SELECTION);
-
+  console.log('MULTIAZ', isMultiAz);
   const isByoc = true;
   const poolsLength = machinePoolsSubnets?.length;
   const isMultiAzSelected = isMultiAz === 'true';
+
+  console.log('isMultiAzSelected', isMultiAzSelected);
   const isHypershiftSelected = isHypershift === 'true';
   const isAutoscalingEnabled = !!autoscalingEnabled;
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;

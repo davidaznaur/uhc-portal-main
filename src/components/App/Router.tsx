@@ -20,8 +20,7 @@ import { connect } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-
-import { Navigate, ocmBaseName } from '~/common/routing';
+import { Navigate, ocmBaseName, useNavigate } from '~/common/routing';
 import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
 import {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -30,7 +29,7 @@ import {
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import apiRequest from '~/services/apiRequest';
-
+import { WizardWrapper } from 'nxtcm-components';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import AIRootApp from '../AIComponents/AIRootApp';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
@@ -64,6 +63,9 @@ import ApiError from './ApiError';
 import { AppPage } from './AppPage';
 import NotFoundError from './NotFoundError';
 import { is404, metadataByRoute } from './routeMetadata';
+import { createClusterRequest } from '../clusters/wizards/common/submitOSDRequest';
+import { useCreateRosaHCPCluster } from '~/queries/RosaWizardQueires/useCreateRosaHCPCluster';
+import { useMutateAccountRoles } from '~/queries/RosaWizardQueires/useMutateAccountRoles';
 
 interface RouterProps {
   planType: string;
@@ -97,6 +99,250 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
       ...(is404() ? { title: '404 Not Found' } : {}),
     });
   }, [pathname, planType, clusterId, externalClusterId, setPageMetadata]);
+
+  const navigate = useNavigate();
+  const { mutate: createROSAHCPCluster } = useCreateRosaHCPCluster();
+
+  const submitROSAHCP = async (data: any) => {
+    const isWizard = true;
+    const cloudProviderID = 'aws';
+    const product = 'ROSA';
+    const selectedVPC = mockVPCs.filter((vpc) => vpc.id === data.cluster.selected_vpc);
+    const updatedClusterData = {
+      data: {
+        ...data.cluster,
+        hypershift: 'true',
+        multi_az: 'false',
+        product: 'ROSA',
+        enable_user_workload_monitoring: false,
+        node_drain_grace_period: 5,
+        billing_model: 'marketplace-aws',
+        selected_vpc: selectedVPC[0],
+        byoc: 'true',
+        machinePoolsSubnets: data.cluster.machine_pools_subnets.map((sub: any) => {
+          return {
+            privateSubnetId: sub.machine_pool_subnet,
+          };
+        }),
+        network_configuration_toggle: 'advanced',
+        cluster_version: {
+          id: data.cluster.cluster_version,
+        },
+        install_to_vpc: true,
+        host_prefix: 23,
+        machine_cidr: '10.0.0.0/16',
+        pod_cidr: '10.128.0.0/14',
+        service_cidr: '172.30.0.0/16',
+        rosa_creator_arn: 'arn:aws:iam::720424066366:role/ManagedOpenShift-OCM-Role-15212158',
+      },
+    };
+
+    console.log('DAVID BEFORE SUBMIT', updatedClusterData.data);
+    // const updateSchedule = upgradeScheduleRequest(data.cluster);
+    const cluster = createClusterRequest(
+      { isWizard, cloudProviderID, product },
+      updatedClusterData.data,
+    );
+
+    console.log('DAVID I AM CLUSTER', cluster);
+    console.log('DAVID WIZARDDATA', data);
+    createROSAHCPCluster(
+      { cluster },
+      {
+        onSuccess: () => {
+          navigate('cluster-list');
+        },
+      },
+    );
+  };
+
+  const mockOpenShiftVersions = [
+    { label: 'OpenShift 4.20.0', value: 'openshift-v4.20.0' },
+    { label: 'OpenShift 4.19.17', value: 'openshift-v4.19.17' },
+    { label: 'OpenShift 4.19.15', value: 'openshift-v4.19.15' },
+  ];
+
+  const mockAwsInfrastructureAccounts = [
+    {
+      label: '720424066366',
+      value: '720424066366',
+    },
+    {
+      label: '767438687542',
+      value: '767438687542',
+    },
+  ];
+
+  const mockAwsBillingAccounts = [
+    {
+      label: '720424066366',
+      value: '720424066366',
+    },
+    {
+      label: '767438687542',
+      value: '767438687542',
+    },
+  ];
+
+  const mockRegions = [
+    { label: 'US East (N. Virginia) - us-east-1', value: 'us-east-1' },
+    { label: 'US West (Oregon) - us-west-2', value: 'us-west-2' },
+    { label: 'Asia Pacific - ap-northeast-1', value: 'ap-northeast-1' },
+  ];
+
+  // const mockRoles = {
+  //   installerRoles: [
+  //             {
+  //               label: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Installer-Role",
+  //               value: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Installer-Role"
+  //             }
+  //     ],
+  //   supportRoles: [
+  //             {
+  //                 label: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Support-Role",
+  //               value: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Support-Role"
+  //             }
+  //     ],
+  //   workerRoles: [
+  //                {
+  //                 label: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Worker-Role",
+  //               value: "arn:aws:iam::720424066366:role/ManagedOpenShift-HCP-ROSA-Worker-Role"
+  //             }
+  //     ]
+  // }
+
+  const mockOicdConfig = [
+    {
+      label: '2a0f9pq1p4bob7jg3h2lpc6q345644v4',
+      value: '2a0f9pq1p4bob7jg3h2lpc6q345644v4',
+      issuer_url: 'https://oidc.os1.devshift.org/2a0f9pq1p4bob7jg3h2lpc6q345644v4',
+    },
+    {
+      label: '22qa79chsq8mand8hvmnr33upj48lmas',
+      value: '22qa79chsq8mand8hvmnr33upj48lmas',
+      issuer_url: 'https://oidc.os1.devshift.org/22qa79chsq8mand8hvmnr33upj48lmas',
+    },
+  ];
+
+  const mockMachineTypes = [
+    {
+      id: 'm5.xlarge',
+      label: 'm5.xlarge',
+      description: '4 vCPU 16 GiB RAM',
+      value: 'm5.xlarge',
+    },
+    {
+      id: 'm6gd.4xlarge',
+      label: 'm6gd.4xlarge',
+      description: '4 vCPU 16 GiB RAM',
+      value: 'm6gd.4xlarge',
+    },
+  ];
+
+  const mockVPCs = [
+    {
+      name: 'daz-vpc',
+      id: 'vpc-0dd40471494dd7337',
+      aws_subnets: [
+        {
+          subnet_id: 'subnet-012129bcabc86337f',
+          name: 'daz-subnet-private1-us-east-1a',
+          red_hat_managed: false,
+          public: false,
+          availability_zone: 'us-east-1a',
+          cidr_block: '10.0.128.0/20',
+        },
+        {
+          subnet_id: 'subnet-071f387e81f5d6e30',
+          name: 'daz-subnet-private2-us-east-1b',
+          red_hat_managed: false,
+          public: false,
+          availability_zone: 'us-east-1b',
+          cidr_block: '10.0.144.0/20',
+        },
+        {
+          subnet_id: 'subnet-087f08f178dacb3a1',
+          name: 'daz-subnet-public1-us-east-1a',
+          red_hat_managed: false,
+          public: true,
+          availability_zone: 'us-east-1a',
+          cidr_block: '10.0.0.0/20',
+        },
+        {
+          subnet_id: 'subnet-027f55ba8784ad350',
+          name: 'daz-subnet-public2-us-east-1b',
+          red_hat_managed: false,
+          public: true,
+          availability_zone: 'us-east-1b',
+          cidr_block: '10.0.16.0/20',
+        },
+      ],
+    },
+  ];
+
+  const { mutateAsync } = useMutateAccountRoles();
+
+  const [roles, setRoles] = React.useState<any>(undefined);
+
+  const onAWSAccountChange = async (account: any) => {
+    const response = await mutateAsync({ accountId: account });
+    const stsRoles = response.data.items as any;
+    const roles = stsRoles?.[0].items;
+    let installerRole: any[] = [];
+    let supportRole: any[] = [];
+    let workerRole: any[] = [];
+    roles.forEach((role: any) => {
+      if (role.type === 'Installer') {
+        installerRole.push({
+          label: role.arn,
+          value: role.arn,
+        });
+      }
+      if (role.type === 'Support') {
+        supportRole.push({
+          label: role.arn,
+          value: role.arn,
+        });
+      }
+
+      if (role.type === 'Worker') {
+        workerRole.push({
+          label: role.arn,
+          value: role.arn,
+        });
+      }
+    });
+
+    const finalRoles = {
+      installerRoles: installerRole,
+      supportRoles: supportRole,
+      workerRoles: workerRole,
+    };
+    setRoles(finalRoles);
+    console.log('DATA IN CALLBACK', finalRoles);
+  };
+  console.log('DATA IN CALLBACK roles', roles);
+  const wizardsStepsData = {
+    basicSetupStep: {
+      openShiftVersions: mockOpenShiftVersions,
+      awsInfrastructureAccounts: mockAwsInfrastructureAccounts,
+      awsBillingAccounts: mockAwsBillingAccounts,
+      regions: mockRegions,
+      roles: roles
+        ? roles
+        : {
+            installerRoles: [],
+            workerRoles: [],
+            supportRoles: [],
+          },
+      oicdConfig: mockOicdConfig,
+      machineTypes: mockMachineTypes,
+      vpcList: mockVPCs,
+    },
+    callbackFunctions: {
+      onAWSAccountChange: onAWSAccountChange,
+    },
+  };
 
   return (
     <ApiError apiRequest={apiRequest}>
@@ -189,6 +435,22 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
             <TermsGuard gobackPath="/create">
               <CreateROSAWizard />
             </TermsGuard>
+          }
+        />
+        <Route
+          path="/test-rosa-wizard"
+          element={
+            <AppPage title="Create OpenShift ROSA Cluster">
+              <WizardWrapper
+                onSubmit={submitROSAHCP}
+                onCancel={() => console.log('DAVID CANCELED WIZARD')}
+                type="rosa-hcp"
+                title="Create HCP cluster"
+                wizardsStepsData={wizardsStepsData}
+                defaultData={{}}
+                stepProps={{}}
+              />
+            </AppPage>
           }
         />
         <Route path="/create" element={<CreateClusterPage activeTab="" />} />

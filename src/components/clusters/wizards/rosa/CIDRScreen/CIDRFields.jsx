@@ -49,6 +49,8 @@ function CIDRFields({
 
   const selectedSubnets = constructSelectedSubnets(formValues);
 
+  console.log('SELECTEDSUBNETS', selectedSubnets);
+
   const cidrValidators = (value) =>
     required(value) || validators.cidr(value) || validators.validateRange(value) || undefined;
 
