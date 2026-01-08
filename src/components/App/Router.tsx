@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
@@ -55,6 +55,10 @@ import TermsGuard from '../common/TermsGuard';
 import Dashboard from '../dashboard';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Overview from '../overview';
+// Lazy load Perses components to avoid webpack initialization issues
+const PersesDashboardPOC = lazy(() =>
+  import('../perses').then((module) => ({ default: module.PersesDashboardPOC })),
+);
 import Quota from '../quota';
 import Releases from '../releases';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
@@ -224,6 +228,14 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route path="/overview/osd" element={<ServicePage serviceName="OSD" />} />
         <Route path="/overview" element={<Overview />} />
         <Route path="/releases" element={<Releases />} />
+        <Route
+          path="/perses"
+          element={
+            <Suspense fallback={<div>Loading Perses Dashboard...</div>}>
+              <PersesDashboardPOC />
+            </Suspense>
+          }
+        />
         <Route path="/assisted-installer/*" element={<AIRootApp />} />
         {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
         <Route
