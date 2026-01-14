@@ -38,7 +38,7 @@ const parseMetricWithUnit = (
   const metric = metrics[metricName]?.[0];
   return {
     value: metric?.value ?? defaultValue,
-    unit: metric?.unit,
+    // Note: SummaryVector doesn't include unit in the API schema
   };
 };
 

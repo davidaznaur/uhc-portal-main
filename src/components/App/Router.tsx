@@ -59,6 +59,9 @@ import Overview from '../overview';
 const PersesDashboardPOC = lazy(() =>
   import('../perses').then((module) => ({ default: module.PersesDashboardPOC })),
 );
+const PersesDashboardFull = lazy(() =>
+  import('../perses').then((module) => ({ default: module.PersesDashboardFull })),
+);
 import Quota from '../quota';
 import Releases from '../releases';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
@@ -233,6 +236,14 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           element={
             <Suspense fallback={<div>Loading Perses Dashboard...</div>}>
               <PersesDashboardPOC />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/perses-full"
+          element={
+            <Suspense fallback={<div>Loading Full Perses Dashboard...</div>}>
+              <PersesDashboardFull />
             </Suspense>
           }
         />
